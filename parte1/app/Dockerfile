@@ -8,10 +8,10 @@
 FROM gradle:4.10 as builder
 
 # Expose port
-EXPOSE 8085
+EXPOSE 8080
 
 # Copy local code to the container image.
-COPY build.grade .
+COPY build.gradle .
 COPY src ./src
 
 # Build a release
