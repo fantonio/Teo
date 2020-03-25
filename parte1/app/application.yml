@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kotlin-application
+spec:
+  containers:
+    - name: container-application-kotlin
+      image: fantonios/jiraya:latest
+      ports:
+        - containerPort: 8080

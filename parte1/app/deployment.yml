@@ -1,0 +1,15 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+    name: kotlin-deployment
+spec:
+    template:
+        metadata:
+            labels:
+                name: application-pod
+        spec:
+            containers:
+                - name: container-application-kotlin
+                  image: fantonios/jiraya:latest
+                  ports:
+                    - containerPort: 8080
