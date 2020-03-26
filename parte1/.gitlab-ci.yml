@@ -1,0 +1,60 @@
+image: gradle:4.10
+
+stages:
+  - test
+  - build
+  - release
+  - deploy
+
+before_script:
+    - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+     - .gradle/wrapper
+     - .gradle/caches
+
+build:
+  stage: build
+  script:
+     - ./gradlew assemble
+
+test:
+  stage: test
+  script:
+     - ./gradlew check
+
+release:
+  stage: release
+  image: docker:latest
+  script:
+    - cd ${APP_PATH}/release
+    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
+    - docker build -t ${CONTAINER_IMAGE} .
+    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_LATEST}
+    - docker push ${CONTAINER_IMAGE}
+    - docker push ${CONTAINER_IMAGE_LATEST}
+
+deploy_staging:
+  stage: deploy
+  image: fantonios/jiraya
+  before_script:
+    - mkdir -p /etc/deploy
+    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+    - kubectl config use-context homekube
+    - helm init --client-only
+    - helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+    - helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com/
+    - helm repo update
+  script:
+    - cd deploy/libr-files
+    - helm dep build
+    - export ARELEASE_NAMEPI_VERSION="$(grep "appVersion" Chart.yaml | cut -d" " -f2)"
+    - export ="libr-files-v${API_VERSION/./-}"
+    - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)
+    - if [ ${DEPLOYS}  -eq 0 ]; then helm install --name=${RELEASE_NAME} . --namespace=${STAGING_NAMESPACE}; else helm upgrade ${RELEASE_NAME} . --namespace=${STAGING_NAMESPACE}; fi
+  environment:
+    name: staging
+    url: https://librerio.example.com
+  only:
+  - master
