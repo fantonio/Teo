@@ -25,8 +25,11 @@ Pacotes necessários para execução deste case no GNU/Linux
 * Gradle >= 4.10
 * Terraform >= 0.12.24
  
-## Execução passo a passo do Desafio.
+## Exemplo de uso.
 
+## Meta
+
+Fábio A. Ferreira – [@fabaof](https://twitter.com/fabaof) – fantonios@gmail.com
 
 ## Resultados.
 
