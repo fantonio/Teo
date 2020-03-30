@@ -140,7 +140,7 @@ resource "aws_security_group" "elbsg" {
 
 resource "aws_elb" "elb1" {
     name = "terraform-elb"
-    availability_zones = ["us-east-1a", "us-east-1b", "us-east-1c"]
+    availability_zones = ["sa-east-1", "us-east-1b", "us-east-1c"]
     security_groups = ["${aws_security_group.elbsg.id}"]
 
     listener {
@@ -176,7 +176,7 @@ resource "aws_lb_cookie_stickiness_policy" "cookie_stickness" {
 }
 
 output "availabilityzones" {
-    value = ["us-east-1a", "us-east-1b", "us-east-1c"]
+    value = ["sa-east-1", "us-east-1b", "us-east-1c"]
 }
 
 output "elb-dns" {
