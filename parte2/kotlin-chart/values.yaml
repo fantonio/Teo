@@ -1,0 +1,8 @@
+image:
+  repository: fantonios/jiraya
+  tag: latest
+  imagePullPolicy: IfNotPresent
+replicaCount: 1
+service:
+  type: NodePort
+  port: 8080

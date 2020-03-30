@@ -1,0 +1,7 @@
+apiVersion: v1
+name: kotlin-chart
+version: v1.0
+description: Este chart é para a instalação de uma aplicação em Kotlin com o Helm
+maintainers:
+  - name: Fábio Ferreira
+    email: fantonios@gmail.com
