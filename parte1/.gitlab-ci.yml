@@ -7,8 +7,8 @@ services:
   - docker:dind
 
 stages:
-  - build
   - test
+  - build
   - package
   - deploy
 
@@ -17,6 +17,11 @@ variables:
   CONTAINER_NAME:itidigital
   USER_DOCKER_HUB:fantonios
   PASSWORD_DOCKER_HUB:''
+
+test:
+  stage: test
+  script:
+     - ./gradlew check
 
 build:
   image: gradle:4.10
@@ -27,16 +32,11 @@ build:
     paths:
       - build/libs/*.jar
 
-test:
-  stage: test
-  script:
-     - ./gradlew check
-
 package:
   stage: package
   script:
     - docker build -t ${CONTAINER_NAME} .
-    - docker docker tag ${CONTAINER_NAME} ${USER_DOCKER_HUB}/${CONTAINER_NAME}
+    - docker tag ${CONTAINER_NAME} ${USER_DOCKER_HUB}/${CONTAINER_NAME}
     - docker login -u ${USER_DOCKER_HUB} -p ${PASSWORD_DOCKER_HUB}
     - docker push ${USER_DOCKER_HUB}/${CONTAINER_NAME}
 

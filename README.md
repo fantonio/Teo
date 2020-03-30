@@ -29,13 +29,19 @@ Pacotes necessários para execução deste case no GNU/Linux
 
 Para a reproduzir este desafio é necessário os seguintes passos para obter o êxito:
 
-Passo 1 - Instalação dos pacotes necessários:
+### Passo 1 - Instalação dos pacotes necessários:
 
 **GIT**
 ```sh
 $ sudo apt update
 $ sudo apt install git 
 ```
+Para os próximos passos será necessário realizar o clone do repositório conforme demostrado abaixo:
+
+```sh
+$ git clone https://github.com/fantonio/Teo.git
+```
+
 **DOCKER**
 ```sh
 $ sudo apt-get update
@@ -92,11 +98,52 @@ $ sudo TER_VER=`curl -s https://api.github.com/repos/hashicorp/terraform/release
 $ sudo wget https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_linux_amd64.zip
 $ sudo mv terraform /usr/local/bin/
 ```
+### Passo 2 - Construção manual do Build e deploy do container da aplicação em Kotlin:
+
+**DOCKER BUILD**
+```sh
+$ sudo docker build -t {username}/helloworld-kotlin .
+```
+**DOCKER TAG**
+```sh
+$ sudo docker tag helloworld-kotlin {username}/helloworld-kotlin
+```
+**DOCKER PUSH**
+```sh
+$ sudo docker push {username}/helloworld-kotlin .
+```
+### Passo 3 - Execução manual do deploy da aplicação:
+
+**INICIANDO MINIKUBE**
+```sh
+$ sudo minikube start
+$ sudo minikube status
+$ sudo minikube service list
+$ sudo kubectl cluster-info
+$ sudo kubectl get nodes
+```
+**Realizando o Deploy via Helm**
+
+Para seguirmos este passo é necessário irmos para a pasta parte1. Pois iremos executar de dentro o Helm que irá realizar o deploy da aplicação em kotlin.
+
+```sh
+$ cd Teo/parte1
+$ helm install kotlin kotlin-chart
+```
+
+Para realizar o teste se a aplicação foi realmente feita o deploy, realize o seguinte comando:
+
+```sh
+$ minikube service kotlin
+```
 
 ## Meta
 
 Fábio A. Ferreira – [@fabaof](https://twitter.com/fabaof) – fantonios@gmail.com
 
 ## Resultados.
+
+Na etapa inicial descrita como parte 1, o resultado esperado é a containerização de aplicação em kotlin utilizando Dockerfile, onde após a criação de um helm chart será possível o deploy gerenciavél pelo Helm. Para que toda está entrega seja customizada via código será utilizado o Gitlab CI onde através de uma pipeline que está declarada em um arquivo **_gitlab-ci.yml_** terá os estágios: **test**, **build**, **package**, **deploy**.Após a execução destes passos o resultado esperado é a disponibilidade de um aplicação API REST em kotlin executando um HelloWorld respondendo na porta 8080.
+
 
 
