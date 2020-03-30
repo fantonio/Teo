@@ -32,13 +32,11 @@ Para a reproduzir este desafio é necessário os seguintes passos para obter o �
 Passo 1 - Instalação dos pacotes necessários:
 
 **GIT**
-
 ```sh
 $ sudo apt update
 $ sudo apt install git 
 ```
 **DOCKER**
-
 ```sh
 $ sudo apt-get update
 $ sudo apt-get install \
@@ -47,7 +45,7 @@ $ sudo apt-get install \
     curl \
     gnupg2 \
     software-properties-common
-$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+$ sudo curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
 
 # Neste próximo comando será necessário substituir a variável $HASH pelo resultado 
 # dos ultimos caracteres na saída do comando acima.
@@ -61,11 +59,38 @@ $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 **HELM**
-
 ```sh
-$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
-$ chmod 700 get_helm.sh
-$ ./get_helm.sh
+$ sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+$ sudo chmod 700 get_helm.sh
+$ sudo ./get_helm.sh
+```
+**MINIKUBE**
+```sh
+$ sudo apt -y install qemu-kvm libvirt-daemon libvirt-daemon-system virtinst bridge-util
+$ sudo curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+$ sudo apt update
+$ sudo apt -y install kubectl
+$ sudo wget https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -O minikube
+$ sudo chmod 755 minikube docker-machine-driver-kvm2
+$ sudo mv minikube docker-machine-driver-kvm2 /usr/local/bin/
+$ sudo minikube version
+```
+**GITLAB**
+```sh
+$ sudo apt update
+$ sudo apt -y install curl vim openssh-server ca-certificates
+$ sudo curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+$ sudo export GITLAB_URL="https://git.example.com"
+$ sudo EXTERNAL_URL="${GITLAB_URL}" apt install gitlab-ce
+$ sudo gitlab-ctl reconfigure
+
+Acesso o endereço definido por você na variável GITLAB_URL em nosso exemplo utilizamos: http://gitlab.example.com
+```
+**TERRAFORM**
+```sh
+$ sudo TER_VER=`curl -s https://api.github.com/repos/hashicorp/terraform/releases/latest | grep tag_name | cut -d: -f2 | tr -d \"\,\v | awk '{$1=$1};1'`
+$ sudo wget https://releases.hashicorp.com/terraform/${TER_VER}/terraform_${TER_VER}_linux_amd64.zip
+$ sudo mv terraform /usr/local/bin/
 ```
 
 ## Meta
