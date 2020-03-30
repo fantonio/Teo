@@ -31,13 +31,13 @@ Para a reproduzir este desafio é necessário os seguintes passos para obter o �
 
 Passo 1 - Instalação dos pacotes necessários:
 
-GIT
+**GIT**
 
 ```sh
 $ sudo apt update
 $ sudo apt install git 
 ```
-DOCKER
+**DOCKER**
 
 ```sh
 $ sudo apt-get update
@@ -48,8 +48,10 @@ $ sudo apt-get install \
     gnupg2 \
     software-properties-common
 $ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+
 # Neste próximo comando será necessário substituir a variável $HASH pelo resultado 
 # dos ultimos caracteres na saída do comando acima.
+
 $ sudo apt-key fingerprint $HASH
 $ sudo add-apt-repository \
    "deb [arch=amd64] https://download.docker.com/linux/debian \
@@ -57,6 +59,13 @@ $ sudo add-apt-repository \
    stable"
 $ sudo apt-get update
 $ sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
+**HELM**
+
+```sh
+$ curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+$ chmod 700 get_helm.sh
+$ ./get_helm.sh
 ```
 
 ## Meta
