@@ -1,45 +1,47 @@
-image: gradle:4.10
-
-stages:
-  - test
-  - build
-  - release
-  - deploy
+image: docker:latest
 
 before_script:
-    - export GRADLE_USER_HOME=`pwd`/.gradle
-    
-cache:
-  paths:
-     - .gradle/wrapper
-     - .gradle/caches
+  - PATH_OS='/Teo/parte1'
+  - CONTAINER_NAME=itidigital
+  - USER_DOCKER_HUB=fantonios
+  - PASSWORD_DOCKER_HUB=''
+
+services:
+  - docker:dind
+
+stages:
+  - build
+  - test
+  - package
+  - deploy
 
 build:
+  image: gradle:4.10
   stage: build
   script:
-     - ./gradlew assemble
+    - gradle build
+  artifacts:
+    paths:
+      - build/libs/*.jar
 
 test:
   stage: test
   script:
      - ./gradlew check
 
-release:
-  stage: release
-  image: docker:latest
+package:
+  stage: package
   script:
-    - cd ${APP_PATH}/release
-    - docker login -u gitlab-ci-token -p ${CI_BUILD_TOKEN} ${CI_REGISTRY}
-    - docker build -t ${CONTAINER_IMAGE} .
-    - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE_LATEST}
-    - docker push ${CONTAINER_IMAGE}
-    - docker push ${CONTAINER_IMAGE_LATEST}
+    - docker build -t ${CONTAINER_NAME} .
+    - docker docker tag ${CONTAINER_NAME} ${USER_DOCKER_HUB}/${CONTAINER_NAME}
+    - docker login -u ${USER_DOCKER_HUB} -p ${PASSWORD_DOCKER_HUB}
+    - docker push ${USER_DOCKER_HUB}/${CONTAINER_NAME}
 
 deploy_staging:
   stage: deploy
-  image: fantonios/jiraya
-  before_script:
-    - minikube start
-    - cd kotlin-chart
   script:
-    - helm install kotlin-chart
+    - minikube start
+    - echo "Entrando dentro do path escolhido."
+    - cd ${PATH_OS}
+    - echo "Deployment da aplicação via Helm."
+    - helm install kotlin kotlin-chart
