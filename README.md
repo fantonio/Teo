@@ -27,7 +27,37 @@ Pacotes necessários para execução deste case no GNU/Linux
  
 ## Exemplo de uso.
 
+Para a reproduzir este desafio é necessário os seguintes passos para obter o êxito:
 
+Passo 1 - Instalação dos pacotes necessários:
+
+GIT
+
+```sh
+$ sudo apt update
+$ sudo apt install git 
+```
+DOCKER
+
+```sh
+$ sudo apt-get update
+$ sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg2 \
+    software-properties-common
+$ curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+# Neste próximo comando será necessário substituir a variável $HASH pelo resultado 
+# dos ultimos caracteres na saída do comando acima.
+$ sudo apt-key fingerprint $HASH
+$ sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+$ sudo apt-get update
+$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+```
 
 ## Meta
 
