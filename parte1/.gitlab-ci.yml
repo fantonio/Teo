@@ -1,10 +1,7 @@
 image: docker:latest
 
 before_script:
-  - PATH_OS='/Teo/parte1'
-  - CONTAINER_NAME=itidigital
-  - USER_DOCKER_HUB=fantonios
-  - PASSWORD_DOCKER_HUB=''
+  - Bem vindos a Ukanda!
 
 services:
   - docker:dind
@@ -14,6 +11,12 @@ stages:
   - test
   - package
   - deploy
+
+variables:
+  PATH_OS:'/Teo/parte1'
+  CONTAINER_NAME:itidigital
+  USER_DOCKER_HUB:fantonios
+  PASSWORD_DOCKER_HUB:''
 
 build:
   image: gradle:4.10

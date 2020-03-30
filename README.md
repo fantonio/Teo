@@ -27,6 +27,8 @@ Pacotes necessários para execução deste case no GNU/Linux
  
 ## Exemplo de uso.
 
+
+
 ## Meta
 
 Fábio A. Ferreira – [@fabaof](https://twitter.com/fabaof) – fantonios@gmail.com
