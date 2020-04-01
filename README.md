@@ -137,6 +137,10 @@ Para realizar o teste se a aplicação foi realmente feita o deploy, realize o s
 $ minikube service kotlin
 ```
 
+## Arquitetura Final
+
+![Arquitetura Kotlin - v2](docs/resources/arquitetura_kotlin_v2.png "Arquitetura Kotlin - v2")
+
 ## Meta
 
 Fábio A. Ferreira – [@fabaof](https://twitter.com/fabaof) – fantonios@gmail.com

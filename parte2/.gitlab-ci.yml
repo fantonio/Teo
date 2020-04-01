@@ -1,0 +1,44 @@
+# .gitlab-ci.yml
+stages:
+  - infrastructure
+
+.terraform:
+  stage: infrastructure
+  image:
+    name: hashicorp/terraform:light
+    entrypoint:
+      - '/usr/bin/env'
+      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'    
+  before_script:
+    - terraform init
+
+# ~~~~~~~~~~~~~~~~ Apply ~~~~~~~~~~~~~~~~
+.terraform_apply:
+  extends: .terraform
+  script:
+    - terraform apply -auto-approve -var-file=config/${ENVIRONMENT}.tfvars
+
+terraform_apply_production:
+  extends: .terraform_apply
+  variables:
+    ENVIRONMENT: production
+  only:
+    refs:
+      - master
+        
+terraform_apply_staging:
+  extends: .terraform_apply
+  variables:
+    ENVIRONMENT: staging
+  only:
+    refs:
+      - develop
+        
+terraform_apply_sandbox:
+  extends: .terraform_apply
+  variables:
+    ENVIRONMENT: sandbox
+  except:
+    refs:
+      - master
+      - develop
