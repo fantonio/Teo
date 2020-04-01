@@ -147,8 +147,10 @@ Fábio A. Ferreira – [@fabaof](https://twitter.com/fabaof) – fantonios@gmail
 
 ## Resultados.
 
+### Parte 1
 Na etapa inicial descrita como parte 1, o resultado esperado é a containerização de aplicação em kotlin utilizando Dockerfile, onde após a criação de um helm chart será possível o deploy gerenciavél pelo Helm. Para que toda está entrega seja customizada via código será utilizado o Gitlab CI onde através de uma pipeline que está declarada em um arquivo **_gitlab-ci.yml_** terá os estágios: **test**, **build**, **package**, **deploy**.Após a execução destes passos o resultado esperado é a disponibilidade de um aplicação API REST em kotlin executando um HelloWorld e respondendo na porta 8080.
 
+### Parte 2
 Adiante na segunta descrita como parte 2, o resultado esperado é a criação de uma Infraestrutura como código. Criando uma automatização da criação da infraestrutura utilizando Terraform e realizando o deploy de uma aplicação na AWS.
 Para esta etapa foi utilizado a criação de arquivos com extensão .tf na seguinte estrutura:
 1. Criação de uma pasta terraform com os arquivos **main.tf** e **variables.tf** e uma pasta chamada **user-data** tendo um arquivo chamado **bootstrap.sh**. Contendo aqui todas as informações necessárias para a realização do provisionamento de uma infraestrutura na cloud da Amazon.
