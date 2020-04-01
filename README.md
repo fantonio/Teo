@@ -147,7 +147,13 @@ Fábio A. Ferreira – [@fabaof](https://twitter.com/fabaof) – fantonios@gmail
 
 ## Resultados.
 
-Na etapa inicial descrita como parte 1, o resultado esperado é a containerização de aplicação em kotlin utilizando Dockerfile, onde após a criação de um helm chart será possível o deploy gerenciavél pelo Helm. Para que toda está entrega seja customizada via código será utilizado o Gitlab CI onde através de uma pipeline que está declarada em um arquivo **_gitlab-ci.yml_** terá os estágios: **test**, **build**, **package**, **deploy**.Após a execução destes passos o resultado esperado é a disponibilidade de um aplicação API REST em kotlin executando um HelloWorld respondendo na porta 8080.
+Na etapa inicial descrita como parte 1, o resultado esperado é a containerização de aplicação em kotlin utilizando Dockerfile, onde após a criação de um helm chart será possível o deploy gerenciavél pelo Helm. Para que toda está entrega seja customizada via código será utilizado o Gitlab CI onde através de uma pipeline que está declarada em um arquivo **_gitlab-ci.yml_** terá os estágios: **test**, **build**, **package**, **deploy**.Após a execução destes passos o resultado esperado é a disponibilidade de um aplicação API REST em kotlin executando um HelloWorld e respondendo na porta 8080.
 
-
+Adiante na segunta descrita como parte 2, o resultado esperado é a criação de uma Infraestrutura como código. Criando uma automatização da criação da infraestrutura utilizando Terraform e realizando o deploy de uma aplicação na AWS.
+Para esta etapa foi utilizado a criação de arquivos com extensão .tf na seguinte estrutura:
+1. Criação de uma pasta terraform com os arquivos **main.tf** e **variables.tf** e uma pasta chamada **user-data** tendo um arquivo chamado **bootstrap.sh**. Contendo aqui todas as informações necessárias para a realização do provisionamento de uma infraestrutura na cloud da Amazon.
+2. Foi criardo o arquivo **_gitlab-ci.yml_** para a construção da pipeline para o controle das versões e deployment desta infraestrutura como código.
+3. Foi mantido as configurações dos arquivos Dockerfile para criação da imagem e os arquivos para realizar o deployment em um cluster kubernetes.
+4. Para a criação desta infraestrutura é necessário a execução do pipeline instanciado em um servidor Gitlab.
+5. O resultado final é a entrega de uma aplicação API REST em kotlin executando um HelloWorld e respondendo na porta 8080.
 
